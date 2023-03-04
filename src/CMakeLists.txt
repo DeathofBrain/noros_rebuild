@@ -1,0 +1,52 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
+
+# SET区
+SET(CMAKE_CXX_STANDARD 17)
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DPATH=\"\\\"${PROJECT_SOURCE_DIR}\\\"\"")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D${CMAKE_SYSTEM_NAME}")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+SET(BIN_NAME "run")
+# 设置相机SDK工具包目录
+SET(HIKVISION_CAMERA_DIR "${PROJECT_SOURCE_DIR}/lib/camera/hikvision")
+# 设置yaml-cpp库
+SET(YAML_CPP_LIBRARIES /usr/local/lib/libyaml-cpp.so) 
+
+# ccache编译器缓存
+FIND_PROGRAM(CCACHE_FOUND ccache) # ccache编译器缓存
+IF(CCACHE_FOUND)
+    SET_PROPERTY(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
+    SET_PROPERTY(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
+    MESSAGE("< Use ccache for compiler >")
+ENDIF()
+
+
+# FIND_PACKAGE区
+# 找到opencv库
+FIND_PACKAGE(OpenCV 4 REQUIRED)
+
+
+# 相机拓展工具文件
+FILE(GLOB_RECURSE sourcefiles "${HIKVISION_CAMERA_DIR}/src/*.cpp" "${HIKVISION_CAMERA_DIR}/tool/src/*.cpp")
+
+add_executable(${BIN_NAME} main.cpp ${sourcefiles})
+
+# 链接到目标
+TARGET_LINK_LIBRARIES(${BIN_NAME} ${OpenCV_LIBS})
+TARGET_LINK_LIBRARIES(${BIN_NAME} MvCameraControl)
+TARGET_LINK_LIBRARIES(${BIN_NAME} ${YAML_CPP_LIBRARIES})
+
+# 指定相机动态链接库所在路径
+LINK_DIRECTORIES(/opt/MVS/lib/aarch64)
+
+# 设置配置文件夹的路径
+set(HIK_CONFIG_FILE_PATH ${HIKVISION_CAMERA_DIR}/config) # 设置相机配置目录路径
+target_compile_definitions(${BIN_NAME} PRIVATE "HIK_CONFIG_FILE_PATH=\"${HIK_CONFIG_FILE_PATH}\"")
+
+# 设置相机标定相关的配置文件路径
+set(HIK_CALI_FILE_PATH ${HIKVISION_CAMERA_DIR}/config/cameraCaliData)
+target_compile_definitions(${BIN_NAME} PRIVATE "HIK_CALI_FILE_PATH=\"${HIK_CALI_FILE_PATH}\"")
+
+
+
+
