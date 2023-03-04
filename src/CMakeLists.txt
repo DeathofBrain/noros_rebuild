@@ -27,9 +27,9 @@ FIND_PACKAGE(OpenCV 4 REQUIRED)
 
 
 # 相机拓展工具文件
-FILE(GLOB_RECURSE sourcefiles "${HIKVISION_CAMERA_DIR}/src/*.cpp" "${HIKVISION_CAMERA_DIR}/tool/src/*.cpp")
+FILE(GLOB_RECURSE SOURCE_FILES "${HIKVISION_CAMERA_DIR}/src/*.cpp" "${HIKVISION_CAMERA_DIR}/tool/src/*.cpp")
 
-add_executable(${BIN_NAME} main.cpp ${sourcefiles})
+add_executable(${BIN_NAME} main.cpp ${SOURCE_FILES})
 
 # 链接到目标
 TARGET_LINK_LIBRARIES(${BIN_NAME} ${OpenCV_LIBS})
