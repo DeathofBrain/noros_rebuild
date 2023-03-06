@@ -58,8 +58,9 @@ struct PicData
 
     ~PicData() = default;
 };
+
 /**
- * @brief 灯条类
+ * @brief 灯条结构体
  * 
  */
 struct LightBar
