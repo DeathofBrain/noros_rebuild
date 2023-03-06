@@ -10,8 +10,10 @@ SET(BIN_NAME "run")
 # 设置相机SDK工具包目录
 SET(HIKVISION_CAMERA_DIR "${PROJECT_SOURCE_DIR}/lib/camera/hikvision")
 # 设置yaml-cpp库
-SET(YAML_CPP_LIBRARIES /usr/local/lib/libyaml-cpp.so) 
+SET(YAML_CPP_LIBRARIES ${PROJECT_SOURCE_DIR}/lib/libyaml-cpp.so) 
 
+
+ADD_DEFINITIONS(-DBOOST_ERROR_CODE_HEADER_ONLY)
 # ccache编译器缓存
 FIND_PROGRAM(CCACHE_FOUND ccache) # ccache编译器缓存
 IF(CCACHE_FOUND)
@@ -20,6 +22,10 @@ IF(CCACHE_FOUND)
     MESSAGE("< Use ccache for compiler >")
 ENDIF()
 
+
+INCLUDE_DIRECTORIES(
+    ${PROJECT_SOURCE_DIR}/lib
+)
 
 # FIND_PACKAGE区
 # 找到opencv库
