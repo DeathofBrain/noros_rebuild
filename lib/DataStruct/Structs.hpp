@@ -19,6 +19,7 @@ struct PicData
     std::deque<Points> armorPoint; // 装甲打击点
     EnemyColor enemyColor;         // 敌方装甲板颜色
     int rgb_threshold;             // 图像通道相减的阈值
+    int svm_threshold;             // SVM的阈值
 
     /**
      * @brief 删除无参构造，防止出错
