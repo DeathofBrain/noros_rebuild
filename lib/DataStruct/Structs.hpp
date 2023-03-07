@@ -5,44 +5,21 @@
 
 struct Points
 {
-    cv::Point2f center;
-    cv::Point2f vertices[4];
-    double distance;
-    int number;
+    cv::Point2f center;                                 //中心点
+    cv::Point2f vertices[4];                            //装甲板四个角
+    double distance;                                    //距离
+    int number;                                         //编号
 };
 
 struct PicData
 {
-    /**
-     * @brief 相机获取到的图片
-     * 
-     */
-    cv::Mat src;
-    /**
-     * @brief 二值化图片
-     * 
-     */
-    cv::Mat binImg;
-    /**
-     * @brief 时间戳
-     * 
-     */
-    long timestamp;
-    /**
-     * @brief 装甲打击点向量
-     * 
-     */
-    std::deque<Points> armorPoint;
-    /**
-     * @brief 敌方装甲板颜色
-     * 
-     */
-    EnemyColor enemyColor;
-    /**
-     * @brief 图像通道相减的阈值
-     * 
-     */
-    int rgb_threshold;
+    cv::Mat src;                                        //相机获取到的图片
+    cv::Mat binImg;                                     //二值化图片
+    long timestamp;                                     //时间戳
+    std::deque<Points> armorPoint;                      //装甲打击点
+    EnemyColor enemyColor;                              //敌方装甲板颜色
+    int rgb_threshold;                                  //图像通道相减的阈值
+
     /**
      * @brief 删除无参构造，防止出错
      * 
@@ -65,12 +42,12 @@ struct PicData
  */
 struct LightBar
 {
-    cv::RotatedRect lightRect;	        //最小外接旋转矩
-	cv::Point2f center;		            //灯条中心点坐标
-	float length;			            //灯条长度
+    cv::RotatedRect lightRect;	                        //最小外接旋转矩
+	cv::Point2f center;		                            //灯条中心点坐标
+	float length;			                            //灯条长度
 	float broad;
 	float area;
-	float angle;			            //灯条的旋转角度
+	float angle;			                            //灯条的旋转角度
 
     LightBar() = default;
 
@@ -93,4 +70,6 @@ struct LightBar
 
     ~LightBar() = default;
 };
+
+
 
