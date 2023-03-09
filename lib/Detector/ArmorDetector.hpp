@@ -103,7 +103,10 @@ public:
                 }
             }
     }
-
+    /**
+     * @brief 组合装甲板
+     * 
+     */
     void matchArmors()
     {
         for (int i = 0; i < lights.size() - 1; i++)
@@ -175,6 +178,6 @@ public:
             }
         }
     }
-    
+
 
 };
