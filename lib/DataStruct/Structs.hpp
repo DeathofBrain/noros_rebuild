@@ -3,29 +3,24 @@
 #include <DataStruct/Enums.hpp>
 #include <deque>
 
-struct Points
-{
-    cv::Point2f center;      // 中心点
-    cv::Point2f vertices[4]; // 装甲板四个角
-    double distance;         // 距离
-    int number;              // 编号
-};
+// struct Points
+// {
+//     cv::Point2f center;      // 中心点
+//     cv::Point2f vertices[4]; // 装甲板四个角
+//     double distance;         // 距离
+//     int number;              // 编号
+// };
 
 struct PicData
 {
     cv::Mat src;                   // 相机获取到的图片
     cv::Mat binImg;                // 二值化图片
     long timestamp;                // 时间戳
-    std::deque<Points> armorPoint; // 装甲打击点
     EnemyColor enemyColor;         // 敌方装甲板颜色
     int rgb_threshold;             // 图像通道相减的阈值
     int svm_threshold;             // SVM的阈值
 
-    /**
-     * @brief 删除无参构造，防止出错
-     *
-     */
-    PicData() = delete;
+    PicData() = default;
 
     PicData(cv::Mat src_, int color, int rgb_threshold_) : enemyColor((EnemyColor)color),
                                                            rgb_threshold(rgb_threshold_)

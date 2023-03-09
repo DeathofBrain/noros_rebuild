@@ -46,8 +46,8 @@ public:
         cv::threshold(grayImg, _src.binImg, _src.rgb_threshold, 255, cv::THRESH_BINARY);
     }
 
-    void OutSrc(PicData& out)
+    PicData Outsrc()
     {
-        out = std::move(this->_src);
+        return this->_src;
     }
 };
