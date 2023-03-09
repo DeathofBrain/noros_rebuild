@@ -1,6 +1,7 @@
 #pragma once
 #include <opencv2/opencv.hpp>
 #include <DataStruct/Structs.hpp>
+#include <Detector/ArmorSVM.hpp>
 
 class ArmorBox
 {
@@ -18,7 +19,7 @@ public:
     float armorAngle;             // 装甲板（灯条）角度
     cv::Mat armorImg;             // 装甲板的图片（透射变换获得）
     ArmorParam armorParam;        // 装甲板相关的各项参数
-
+    ArmorSVM svm;                 // SVM
 public:
     /**
      * @brief 设置装甲板顶点
@@ -197,7 +198,4 @@ class ArmorDetector : public ArmorBox
 {
 public:
     PicData src_;
-    
 };
-
-

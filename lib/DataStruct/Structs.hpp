@@ -77,25 +77,11 @@ struct LightBar
 struct ArmorParam
 {
 
-    float min_area;             // 灯条允许的最小面积
-    float max_angle;            // 灯条允许的最大偏角
-    float max_angle_diff;       // 两个灯条之间允许的最大角度差
-    float max_lengthDiff_ratio; // 两个灯条之间允许的最大长度差比值
-    float max_deviation_angle;  // 两灯条最大错位角
-    float max_y_diff_ratio;     // max y
-    float max_x_diff_ratio;     // max x
-
-    // 给各参数设定默认值
-    ArmorParam()
-    {
-        min_area = 10;
-        max_angle = 45;
-
-        max_angle_diff = 6;
-        max_lengthDiff_ratio = 0.5;
-        max_deviation_angle = 50;
-
-        max_y_diff_ratio = 0.5;
-        max_x_diff_ratio = 4.5;
-    }
+    float min_area = 10.0F;            // 灯条允许的最小面积
+    float max_angle = 45.0F;           // 灯条允许的最大偏角
+    float max_angle_diff = 6.0F;       // 两个灯条之间允许的最大角度差
+    float max_lengthDiff_ratio = 0.5F; // 两个灯条之间允许的最大长度差比值
+    float max_deviation_angle = 50.0F; // 两灯条最大错位角
+    float max_y_diff_ratio = 0.5F;     // max y
+    float max_x_diff_ratio = 4.5F;     // max x
 };
