@@ -29,6 +29,7 @@ INCLUDE_DIRECTORIES(
     ${PROJECT_SOURCE_DIR}/lib/Guide
     ${PROJECT_SOURCE_DIR}/lib/yaml-cpp
     ${PROJECT_SOURCE_DIR}/lib/SerialCOM
+    ${PROJECT_SOURCE_DIR}/lib/camera
 )
 
 # FIND_PACKAGE区
