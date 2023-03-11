@@ -24,7 +24,11 @@ ENDIF()
 
 
 INCLUDE_DIRECTORIES(
-    ${PROJECT_SOURCE_DIR}/lib
+    ${PROJECT_SOURCE_DIR}/lib/Detector
+    ${PROJECT_SOURCE_DIR}/lib/DataStruct
+    ${PROJECT_SOURCE_DIR}/lib/Guide
+    ${PROJECT_SOURCE_DIR}/lib/yaml-cpp
+    ${PROJECT_SOURCE_DIR}/lib/SerialCOM
 )
 
 # FIND_PACKAGE区

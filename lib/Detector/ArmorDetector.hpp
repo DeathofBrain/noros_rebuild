@@ -3,7 +3,7 @@
 #include <Detector/ArmorBox.hpp>
 
 /**
- * @brief 装甲定位类
+ * @brief 装甲检测类
  *
  */
 class ArmorDetector
