@@ -3,7 +3,9 @@
 #include <vector>
 #include <DataStruct/Enums.hpp>
 #include <DataStruct/GlobalVariables.hpp>
+#include <Detector/ArmorBox.hpp>
 #include <iostream>
+#include <tuple>
 
 class Monocular
 {
@@ -26,6 +28,8 @@ public:
     cv::Mat rVec; // rot rotation between camera and target center
     cv::Mat tVec; // trans tanslation between camera and target center
 
+    ArmorBox targetArmor;
+
     // results
     double x_pos, y_pos, z_pos; // 装甲板坐标
     double distance;            // 相机距装甲板的距离
@@ -36,6 +40,15 @@ public:
      * @brief 初始化相机相机内参
      */
     Monocular()
+    {
+        using namespace camera;
+        this->CAMERA_MATRIX = (cv::Mat_<double>(3, 3) << fx, 0, u0, 0, fy, v0, 0, 0, 1);
+        this->DISTORTION_COEFF = (cv::Mat_<double>(5, 1) << k1, k2, p1, p2, k3);
+        this->rVec = cv::Mat::zeros(3, 1, CV_64FC1);
+        this->tVec = cv::Mat::zeros(3, 1, CV_64FC1);
+    }
+
+    Monocular(ArmorBox armor) : targetArmor(armor)
     {
         using namespace camera;
         this->CAMERA_MATRIX = (cv::Mat_<double>(3, 3) << fx, 0, u0, 0, fy, v0, 0, 0, 1);
@@ -162,4 +175,19 @@ public:
     }
 
 public:
+    /**
+     * @brief 定位装甲板
+     *
+     * @param showCordin 是否输出坐标
+     * @param showDist 是否输出距离
+     * @return std::tuple<double,double,double> 坐标（相机坐标系x,z,y）
+     */
+    std::tuple<double, double, double> startLocate(int showCordin = 0, int showDist = 0)
+    {
+        setArmorSize(targetArmor.type);
+        setTarget2D(std::vector<cv::Point2f>(targetArmor.armorVertices, targetArmor.armorVertices + 4), targetArmor.center, targetArmor.type);
+        getArmorCoordinate();
+        showDebugInfo(showCordin, showDist);
+        return {this->x_pos, this->z_pos, this->y_pos};
+    }
 };
