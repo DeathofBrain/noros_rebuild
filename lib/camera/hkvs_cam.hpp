@@ -1,4 +1,4 @@
-#program once
+#pragma once
 
 #include <stdio.h>
 #include <string.h>
@@ -32,7 +32,7 @@ class hkvs_cam
         pthread_spinlock_t mutex;
         long timestamp;
     public:
-        hkvs_cam();
+        hkvs_cam() = default;
         ~hkvs_cam();
         void InitCam();//相机初始化函数
         void PrintDeviceInfo();//打印相机参数
@@ -41,10 +41,6 @@ class hkvs_cam
         void ReadImg(cv::Mat &src,long &Timestamp);//读图函数
 
 };
-hkvs_cam::hkvs_cam(/* args */)
-{
-    NULL;
-}
 hkvs_cam::~hkvs_cam()
 {
     pthread_join(this->nThreadID, NULL);
