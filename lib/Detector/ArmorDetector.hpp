@@ -105,7 +105,7 @@ public:
     }
     /**
      * @brief 组合装甲板
-     * 
+     *
      */
     void matchArmors()
     {
@@ -141,16 +141,19 @@ public:
      */
     void SVMProcess()
     {
-        svm.loadImg(src_.src);
-        for (auto &armor : armors)
+        if (!armors.empty())
         {
-            svm.getArmorImg(armor);
-            svm.getArmorNum(armor);
+            svm.loadImg(src_.src);
+            for (auto &armor : armors)
+            {
+                svm.getArmorImg(armor);
+                svm.getArmorNum(armor);
+            }
         }
     }
     /**
      * @brief 若有目标序号则优先击打，否则击打最大目标
-     * 
+     *
      */
     void setTargetArmor()
     {
@@ -179,5 +182,37 @@ public:
         }
     }
 
+public:
+    void start()
+    {
+        // 首先，载入并处理图像
+        svm.loadImg(src_.src); // 对源图像预处理
 
+        // 随后，重设detector的内容，清空在上一帧中找到的灯条和装甲板，同时检测器状态重置为LIGHTS_NOT_FOUND（最低状态）
+        resetDetector();
+
+        // 第三步，在当前图像中找出所有的灯条
+        findLights();
+
+        // 第四步，如果状态为LIGHTS_FOUND（找到多于两个灯条），则
+        if (state == LIGHTS_FOUND)
+        {
+            // 将每两个灯条匹配为一个装甲板，如果匹配出来的装甲板是合适的，则压入armors中
+            matchArmors();
+
+            // 对每个识别到的装甲板进行SVM处理
+            SVMProcess();
+
+            // 如果找到了灯条，则设置好目标装甲板和上一个装甲板
+            if (state == ARMOR_FOUND)
+            {
+                setTargetArmor();
+            }
+        }
+    }
+public:
+    void throwShowImgs()
+    {
+        //TODO:抛出需要通过UDP传输的图像结构体
+    }
 };
