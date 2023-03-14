@@ -23,15 +23,6 @@ IF(CCACHE_FOUND)
 ENDIF()
 
 
-INCLUDE_DIRECTORIES(
-    ${PROJECT_SOURCE_DIR}/lib/Detector
-    ${PROJECT_SOURCE_DIR}/lib/DataStruct
-    ${PROJECT_SOURCE_DIR}/lib/Guide
-    ${PROJECT_SOURCE_DIR}/lib/yaml-cpp
-    ${PROJECT_SOURCE_DIR}/lib/SerialCOM
-    ${PROJECT_SOURCE_DIR}/lib/camera
-)
-
 # FIND_PACKAGE区
 # 找到opencv库
 FIND_PACKAGE(OpenCV 4 REQUIRED)

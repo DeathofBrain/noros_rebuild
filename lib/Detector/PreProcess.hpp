@@ -3,7 +3,7 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include <math.h>
-#include <DataStruct/Structs.hpp>
+#include "../DataStruct/Structs.hpp"
 /**
  * @brief 图像预处理类
  * 

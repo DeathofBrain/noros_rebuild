@@ -1,6 +1,6 @@
 #pragma once
 #include <opencv2/opencv.hpp>
-#include <Detector/ArmorBox.hpp>
+#include "../Detector/ArmorBox.hpp"
 
 /**
  * @brief 装甲检测类

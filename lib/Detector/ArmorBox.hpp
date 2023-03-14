@@ -1,9 +1,9 @@
 #pragma once
 #include <opencv2/opencv.hpp>
 #include <vector>
-#include <DataStruct/Structs.hpp>
-#include <Detector/ArmorSVM.hpp>
-#include <Detector/PreProcess.hpp>
+#include "../DataStruct/Structs.hpp"
+#include "../Detector/ArmorSVM.hpp"
+#include "../Detector/PreProcess.hpp"
 
 class ArmorBox
 {

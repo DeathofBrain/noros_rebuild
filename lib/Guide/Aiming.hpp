@@ -2,6 +2,8 @@
 #include <opencv2/opencv.hpp>
 #include <eigen3/Eigen/Core>
 #include <eigen3/Eigen/Dense>
+#include "../DataStruct/Enums.hpp"
+#include "../Detector/ArmorBox.hpp"
 #include <bits/stdc++.h>
 
 class Aiming
@@ -10,11 +12,18 @@ public:
     const static float g = 9.8F;
     const static float kk = 0.001F;
     const static float v = 13.9F;
-public:
-    Eigen::Vector3f posi_xyz;
 
 public:
-    void GetRealCoordinateX(double angle, double Lx, double Ly, double Lz, int twist_mode)
+    Eigen::Vector3f posi_xyz;
+    std::vector<double> x_vector = std::vector<double>(2, 0);
+    std::vector<double> y_vector = std::vector<double>(2, 0);
+    std::vector<double> z_vector = std::vector<double>(2, 0);
+    float yaw_now;
+    float pitch_now;
+    float yaw_last;
+
+public:
+    void GetRealCoordinateX(Eigen::Vector3f &posi_xyz, double angle, double Lx, double Ly, double Lz, int twist_mode)
     {
         angle = -angle;
         Eigen::MatrixXd T(4, 4);
@@ -87,8 +96,67 @@ public:
 
         return theta;
     }
+    /**
+     * @brief 计算平均速度和加速度
+     *
+     * @param posi_xyz 坐标
+     */
+    void velocity(Eigen::Vector3f posi_xyz)
+    {
+        float dt = 0.02F;
+        int data_size = 7;
+        x_vector.push_back(posi_xyz[0]);
+        y_vector.push_back(posi_xyz[1]);
+        z_vector.push_back(posi_xyz[2]);
+        if ((x_vector.size()) < (data_size + 2))
+        {
+            x_vector[1] = 0;
+            y_vector[1] = 0;
+            z_vector[1] = 0;
+            if (x_vector.size() > 3)
+            {
+                x_vector[0] = (x_vector[x_vector.size() - 1] - x_vector[2]) / (dt * (x_vector.size() - 3));
+                y_vector[0] = (y_vector[x_vector.size() - 1] - y_vector[2]) / (dt * (x_vector.size() - 3));
+                z_vector[0] = (z_vector[x_vector.size() - 1] - z_vector[2]) / (dt * (x_vector.size() - 3));
+            }
+            else
+            {
+                x_vector[0] = 0;
+                y_vector[0] = 0;
+                z_vector[0] = 0;
+            }
+        }
+        else
+        {
+            x_vector[0] = (x_vector[data_size + 1] - x_vector[2]) / (dt * 5);
+            y_vector[0] = (y_vector[data_size + 1] - y_vector[2]) / (dt * 5);
+            z_vector[0] = (z_vector[data_size + 1] - z_vector[2]) / (dt * 5);
+            x_vector[1] = (x_vector[data_size + 1] - 2 * x_vector[data_size - 2] + x_vector[data_size - 5]) / (9 * pow(dt, 2));
+            y_vector[1] = (y_vector[data_size + 1] - 2 * y_vector[data_size - 2] + y_vector[data_size - 5]) / (9 * pow(dt, 2));
+            z_vector[1] = (z_vector[data_size + 1] - 2 * z_vector[data_size - 2] + z_vector[data_size - 5]) / (9 * pow(dt, 2));
+            x_vector.erase(x_vector.begin() + 2, x_vector.begin() + 3);
+            y_vector.erase(y_vector.begin() + 2, y_vector.begin() + 3);
+            z_vector.erase(z_vector.begin() + 2, z_vector.begin() + 3);
+        }
+    }
 
 public:
-    Aiming();
-    ~Aiming();
+    Aiming() = default;
+    ~Aiming() = default;
+
+public:
+    std::pair<float, float> Guide(ArmorBox targetArmor)
+    {
+        float x0 = posi_xyz[0];
+        float y0 = posi_xyz[1];
+        float z0 = -posi_xyz[2];
+        float dfoot = 0.14F;
+        posi_xyz[0] = -posi_xyz[0];
+        posi_xyz[2] = -posi_xyz[2];
+        GetRealCoordinateX(posi_xyz, pitch_now / 180 * 3.14, 0, 0.03, 0.03, 0);
+        velocity(posi_xyz);
+        auto theta = GetAngle();
+        yaw_last = yaw_now;
+        return {theta[1] / 3.14 * 180, theta[0] / 3.14 * 180};
+    }
 };

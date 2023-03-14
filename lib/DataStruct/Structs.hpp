@@ -1,6 +1,6 @@
 #pragma once
 #include <opencv2/opencv.hpp>
-#include <DataStruct/Enums.hpp>
+#include "../DataStruct/Enums.hpp"
 #include <deque>
 
 // struct Points

@@ -1,9 +1,9 @@
 #pragma once
 #include <opencv2/opencv.hpp>
 #include <vector>
-#include <DataStruct/Enums.hpp>
-#include <DataStruct/GlobalVariables.hpp>
-#include <Detector/ArmorBox.hpp>
+#include "../DataStruct/Enums.hpp"
+#include "../DataStruct/GlobalVariables.hpp"
+#include "../Detector/ArmorBox.hpp"
 #include <iostream>
 #include <tuple>
 

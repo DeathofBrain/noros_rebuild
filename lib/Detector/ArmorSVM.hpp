@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <opencv2/opencv.hpp>
-#include <Detector/ArmorBox.hpp>
+#include "../Detector/ArmorBox.hpp"
 
 class ArmorSVM
 {
