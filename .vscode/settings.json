@@ -5,5 +5,6 @@
         "ostream": "cpp",
         "tuple": "cpp"
     },
-    "cmake.sourceDirectory": "${workspaceFolder}/."
+    "cmake.sourceDirectory": "${workspaceFolder}/.",
+    "ros.distro": "melodic"
 }
