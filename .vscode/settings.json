@@ -4,5 +4,6 @@
         "iostream": "cpp",
         "ostream": "cpp",
         "tuple": "cpp"
-    }
+    },
+    "cmake.sourceDirectory": "${workspaceFolder}/."
 }
