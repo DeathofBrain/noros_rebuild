@@ -22,7 +22,7 @@
 *.out
 *.app
 
-.vscode/*
+.vscode
 bin
 build
 CMakeFiles
