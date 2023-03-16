@@ -3,6 +3,8 @@
 shared_ptr<serial_port> SerialPort::serialPort = nullptr;
 char SerialPort::receiveData[] = {0};
 
+
+
 SerialPort::SerialPort() :
     portName("/dev/ttyUSB0"),
     baudRate(115200)
